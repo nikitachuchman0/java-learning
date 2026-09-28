@@ -1,8 +1,7 @@
-package dataStructuries;
+package datastructures;
 
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
 

@@ -1,8 +1,8 @@
-package mainTree;
+package app;
 
 
 
-import dataStructuries.BinaryTree;
+import datastructures.BinaryTree;
 
 import java.util.*;
 
@@ -252,12 +252,9 @@ public class Main {
         String log = "tx-monero-901;   TX-MONERO-104;   tx-monero-901 ; tx-bitcoin-200 ; TX-Monero-104 ;   tx-monero-33 ; TX-Monero-154 ;    TX-Monero-123 ";
         System.out.println(parseLog(log));
 
-        List<String> strings1 = new ArrayList<>();
-        List raw = strings1;          // строка 1
-        raw.add(42);                 // строка 2
-        String s = strings1.get(0);
+       
 
-      
+
     }
 
 
@@ -298,10 +295,6 @@ public class Main {
 
     }
 
-    public static void nnnn(int n) {
-        if (n > 10000) System.out.println(n);
-        nnnn(n += 1);
-    }
 
     public static <T> Set<T> simetrucSet(Set<T> oldSet, Set<T> newSet) {
         Objects.requireNonNull(oldSet);

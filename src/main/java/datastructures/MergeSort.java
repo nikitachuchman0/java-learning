@@ -1,7 +1,7 @@
-package dataStructuries;
+package datastructures;
 
 
-public class mergeSort {
+public class MergeSort {
 
 
     public static int[] sortMerge(int[] array) {

@@ -1,7 +1,6 @@
-package dataStructuries;
+package datastructures;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Objects;
 
 public class MyLinkedList <T> implements Iterable<T>{
