@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Wallet <T extends Number> {
    private final T[] nums;
-
+   private static final double EPSILON = 1e-9;
 
 
     public Wallet(T[] nums) {
@@ -31,7 +31,7 @@ public class Wallet <T extends Number> {
         if (other == null) throw new NullPointerException("other is null!");
         if (this == other) return true; // тут думал вставлять ли доп иф что бы сразу отскчь и дать елс что бы не заходить в метод и не перещитывать среднию
 
-        return this.total() == other.total();
+        return Math.abs(this.total() - other.total()) < EPSILON;
     }
 
 
