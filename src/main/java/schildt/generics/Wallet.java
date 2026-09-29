@@ -28,7 +28,8 @@ public class Wallet <T extends Number> {
     }
 
     public boolean isSameTotal(Wallet<?> /* нужно именно ? потому что мы смлжем не привязывться к конкретному типу который указан в этом классе при создании */ other ){
-        if (Objects.equals(this, other) ) return true; // тут думал вставлять ли доп иф что бы сразу отскчь и дать елс что бы не заходить в метод и не перещитывать среднию
+        if (other == null) throw new NullPointerException("other is null!");
+        if (this == other) return true; // тут думал вставлять ли доп иф что бы сразу отскчь и дать елс что бы не заходить в метод и не перещитывать среднию
 
         return this.total() == other.total();
     }

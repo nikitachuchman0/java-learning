@@ -9,6 +9,8 @@ import schildt.generics.Wallet;
 
 import java.util.*;
 
+import static schildt.generics.ItemUtils.totalPrice;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -267,9 +269,9 @@ public class Main {
         List<Knife> knifeList = new ArrayList<>();
         List<Object> objectList = new ArrayList<>();
 
-        Item.totalPrice(itemList);
-        Item.totalPrice(knifeList);
-        Item.totalPrice(skinList);
+        totalPrice(itemList);
+        totalPrice(knifeList);
+        totalPrice(skinList);
         // Item.totalPrice(objectList); не скопилиться из-за того что верхняя граница айтем
 
         Skin.addStarterSkins(itemList);
