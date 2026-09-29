@@ -8,13 +8,14 @@ public class Skin extends Item{
     }
 
 
-    public static void addStarterSkins(List<? super Skin> dest){ // нельзя положить айтем потому что наша верхняя граница это скин мы можем положить либо скин или его потомков. и это у нас консумер
+    public static void addStarterSkins(List<? super Skin> dest){ /* писать: Skin и его наследников (Knife) ✅   Item ❌ — вдруг это List<Skin>?
+                                                                    читать: только Object — вдруг это List<Object>? */
         if (dest == null) throw new NullPointerException("Array is Null, cant add starter skins!");
 
         dest.add(new Skin(12.3));
         dest.add(new Knife(123.3));
         dest.add(new Knife(98.9));
-        // при чтении из листа мы получаем скин потому что это наша верхняя граница
+        // при чтении из листа мы получаем object потому что это наша верхняя граница
     }
 
 
