@@ -1,8 +1,11 @@
 package app;
 
 
-
 import datastructures.BinaryTree;
+import schildt.generics.Item;
+import schildt.generics.Knife;
+import schildt.generics.Skin;
+import schildt.generics.Wallet;
 
 import java.util.*;
 
@@ -252,15 +255,107 @@ public class Main {
         String log = "tx-monero-901;   TX-MONERO-104;   tx-monero-901 ; tx-bitcoin-200 ; TX-Monero-104 ;   tx-monero-33 ; TX-Monero-154 ;    TX-Monero-123 ";
         System.out.println(parseLog(log));
 
-       
+
+        List<String> list3 = new ArrayList<>();
+
+        //   printAll(list3); // можем передать любой тип на чтение
+        //  printObjects(list3);
 
 
+        List<Item> itemList = new ArrayList<>();
+        List<Skin> skinList = new ArrayList<>();
+        List<Knife> knifeList = new ArrayList<>();
+        List<Object> objectList = new ArrayList<>();
+
+        Item.totalPrice(itemList);
+        Item.totalPrice(knifeList);
+        Item.totalPrice(skinList);
+        // Item.totalPrice(objectList); не скопилиться из-за того что верхняя граница айтем
+
+        Skin.addStarterSkins(itemList);
+        Skin.addStarterSkins(skinList);
+        Skin.addStarterSkins(objectList);
+        //  Skin.addStarterSkins(knifeList); // не скомпилиться потому что нижняя граница это скин
+
+
+        knifeList = List.of(new Knife(456), new Knife(23), new Knife(11));
+
+        System.out.println(max(knifeList)); /* java: method max in class app.Main cannot be applied to given types;
+  required: java.util.List<T>
+  found:    java.util.List<schildt.generics.Knife>
+  reason: inference variable T has incompatible equality constraints schildt.generics.Item,schildt.generics.Knife
+  */
+        System.out.println(min(knifeList));
+
+        System.out.println(new Wallet<Integer>(new Integer[0]).getClass() == new Wallet<Double>(new Double[0]).getClass()); // иде даже подсказывает что всегда будет тру потому что стирание типов компилятор не знает параметр типа
+
+        Item item = new Item(12);
+        Knife knife = new Knife(12);
+        item = (Item) knife;
     }
 
 
 
 
-    public static <T extends Comparable<T>> T first(T[] arr){
+
+    public static <T extends Comparable<? super T>> T max(List<T> list) {
+        if (list == null) throw new NullPointerException("List is null!");
+
+        T result = null;
+        for (T item : list) {
+            if (result == null) {
+                result = list.getFirst();
+                continue;
+            }
+
+            if (result.compareTo(item) < 0) {
+                result = item;
+            }
+        }
+
+        return result;
+    }
+
+
+    public static <T extends Comparable<? super T>> T min(List<T> list) {
+        if (list == null) throw new NullPointerException("List is null!");
+
+        T result = null;
+        for (T item : list) {
+            if (result == null) {
+                result = list.getFirst();
+                continue;
+            }
+
+            if (result.compareTo(item) > 0) {
+                result = item;
+            }
+        }
+
+        return result;
+
+    }
+
+    public static <T> void copy(List<? extends T> src, List<? super T> dst) {
+        Objects.requireNonNull(src, "List src is null!");
+        Objects.requireNonNull(dst, "List dst is null!");
+
+        dst.addAll(src);
+    }
+
+
+    public static void printAll(List<?> list) {
+        System.out.println(list);
+        // list.add("x"); записывть можем только нал компилятор не знает конкретного параметра типа во время выполнения
+    }
+
+    public static void printObjects(List<Object> list) {// так же не передадим сюда лист с другим параметром класа изза инвариативности
+        System.out.println(list); // тут знаю что будет печтать только хеш и класс листа потому что не будет реализации вывода елементов
+        list.add("x"); // можем потому что я не знаю разбери этот момент отдельно  в чате без воды простиым языком
+    }
+
+
+    public static <T extends Comparable<T>> T first(T[] arr) {
         return arr[0];
     }
 
@@ -270,9 +365,8 @@ public class Main {
 
         input = input.toUpperCase();
         Set<Integer> treeSet = new TreeSet<>();
-        for (String str : input.split(";")){
-            if (str.contains("MONERO"))
-            {
+        for (String str : input.split(";")) {
+            if (str.contains("MONERO")) {
                 str = str.strip();
 
                 str = str.replaceAll("\\D", "");
@@ -284,12 +378,12 @@ public class Main {
 
         StringBuilder sb = new StringBuilder("MONERO REPORT: ");
 
-        for (Integer integer : treeSet){
+        for (Integer integer : treeSet) {
             sb.append(integer).append(", ");
         }
 
-        if (!treeSet.isEmpty()){
-            sb.setLength(sb.length()- 2);
+        if (!treeSet.isEmpty()) {
+            sb.setLength(sb.length() - 2);
         }
         return sb.toString();
 
@@ -328,13 +422,6 @@ public class Main {
         return biggestElement;
     }
 
-
-    public static <T> void copy(List<? extends Integer> source, List<? super Number> dst) {
-        for (Integer numSource : source) {
-            dst.add(numSource);
-        }
-        System.out.println(dst.toString());
-    }
 
     public static void fillWithIntegers(List<? super Integer> list) {
         for (int i = 1; i <= 5; i++) {
