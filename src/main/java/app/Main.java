@@ -45,7 +45,7 @@ public class Main {
 //
 ////         int[] array = new Random().ints(1, 1000000000).distinct().limit(99999999).toArray();
 ////
-////         for (int i = 0; i < 30; i++) {
+////         for (inti = 0; i < 30; i++) {
 ////             System.out.println(array[i]);
 ////         }
 //
@@ -57,7 +57,7 @@ public class Main {
 //
 //        System.out.println(factorial(3));
 //        System.out.println();
-//        raketa(5);
+//        rake(5);
 //
 //        System.out.println(sum(6));
 //
@@ -75,7 +75,7 @@ public class Main {
 //        Integer d = 128;
 //        System.out.println(c == d); // А что выведет здесь?
 //
-//    }
+//
 //
 //
 //
@@ -92,14 +92,14 @@ public class Main {
 //
 //    }
 //
-//    public static void raketa(int n) {
+//    public static void rake(int n) {
 //        if (n == 0) {
 //            System.out.println("pusk");
 //            return;
 //        }
 //
 //        System.out.println(n);
-//        raketa(n - 1);
+//        rake(n - 1);
 //    }
 //
 //    public static int sum(int n) {
@@ -133,9 +133,9 @@ public class Main {
         strings.add("ddd");
         System.out.println(strings.toString());
 
-        List<String> marketItems = new ArrayList<>(List.of("AK-47", "StatTrak Survival Knife", "AWP", "M4A4"));
+        List<String> marketItems = new ArrayList<>(List.of("AK-47", "StatTrack Survival Knife", "AWP", "M4A4"));
 
-        marketItems.set(marketItems.indexOf("StatTrak Survival Knife"), "Sport Gloves");
+        marketItems.set(marketItems.indexOf("StatTrack Survival Knife"), "Sport Gloves");
 
         System.out.println(marketItems);
 
@@ -226,11 +226,11 @@ public class Main {
 
         System.out.println(simetrucSet(yesterday, today));
 
-        Object object = "skadjka";
+        Object object = "skank";
 
         System.out.println(object.getClass());
 
-        /// nnnn(13);
+        /// union(13);
 
         BinaryTree<Integer, String> binaryTree = new BinaryTree<>(null);
 
@@ -289,7 +289,7 @@ public class Main {
   */
         System.out.println(min(knifeList));
 
-        System.out.println(new Wallet<Integer>(new Integer[0]).getClass() == new Wallet<Double>(new Double[0]).getClass()); // иде даже подсказывает что всегда будет тру потому что стирание типов компилятор не знает параметр типа
+        System.out.println(new Wallet<Integer>(new Integer[0]).getClass() == new Wallet<Double>(new Double[0]).getClass()); // Иде даже подсказывает что всегда будет тереть потому что стирание типов компилятор не знает параметр типа
 
         Item item = new Item(12);
         Knife knife = new Knife(12);
@@ -297,11 +297,32 @@ public class Main {
     }
 
 
+    public static <T extends Comparable<? super T>> int countGreaterThan(List<T> list, T item) {
+        if (list == null || item == null) throw new NullPointerException("list or item is null!");
+        if (list.isEmpty()) throw new NoSuchElementException("List is Empty!");
 
+        int counter = 0;
+
+        for (T it : list) {
+            if (it.compareTo(item) > 0) counter++;
+        }
+
+        return counter;
+    }
+
+    /**
+     *
+     * @param <T>
+     * @param list
+     * @return T
+     * @throws NullPointerException when list is null
+     * @throws NoSuchElementException when list is empty
+     */
 
 
     public static <T extends Comparable<? super T>> T max(List<T> list) {
         if (list == null) throw new NullPointerException("List is null!");
+        if (list.isEmpty()) throw new NoSuchElementException("List is Empty!");
 
         T result = null;
         for (T item : list) {
@@ -318,9 +339,19 @@ public class Main {
         return result;
     }
 
+    /**
+     *
+     * @param <T extends Comparable<? super T>>
+     * @param list<T>
+     * @return T
+     * @throws NullPointerException when list is null
+     * @throws NoSuchElementException when list is empty
+     */
+
 
     public static <T extends Comparable<? super T>> T min(List<T> list) {
         if (list == null) throw new NullPointerException("List is null!");
+        if (list.isEmpty()) throw new NoSuchElementException("List is Empty!");
 
         T result = null;
         for (T item : list) {
@@ -351,9 +382,9 @@ public class Main {
         // list.add("x"); записывть можем только нал компилятор не знает конкретного параметра типа во время выполнения
     }
 
-    public static void printObjects(List<Object> list) {// так же не передадим сюда лист с другим параметром класа изза инвариативности
+    public static void printObjects(List<Object> list) {// так же не передадим сюда лист с другим параметром класа из-за инвариативности
         System.out.println(list); // тут знаю что будет печтать только хеш и класс листа потому что не будет реализации вывода елементов
-        list.add("x"); // можем потому что я не знаю разбери этот момент отдельно  в чате без воды простиым языком
+        list.add("x"); // можем потому что я не знаю разобрать этот момент отдельно в чате без воды простиым языком
     }
 
 
