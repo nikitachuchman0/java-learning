@@ -14,122 +14,7 @@ import static schildt.generics.ItemUtils.totalPrice;
 public class Main {
     public static void main(String[] args) {
 
-
-//        MyLinkedList<Integer> linkedList = new MyLinkedList<>();
-//
-//        for (int i = 0; i < 20; i++) {
-//            linkedList.add(i);
-//        }
-//
-//        Iterator<Integer> iterator = linkedList.iterator();
-//
-//        while (iterator.hasNext()) {
-//            System.out.println(iterator.next().toString());
-//        }
-//
-//
-//        int[] arr = new int[5];
-//        for (int i = 0; i < arr.length; i++) {
-//            if (i % 2 == 0) {
-//                arr[i] = (i + 5) * 3;
-//                continue;
-//            }
-//
-//            arr[i] = i + 3;
-//        }
-//
-//        System.out.println(Arrays.toString(arr));
-//
-//        //  System.out.println(Arrays.toString(mergeSort.sortMerge(arr)));
-//
-//
-////         int[] array = new Random().ints(1, 1000000000).distinct().limit(99999999).toArray();
-////
-////         for (inti = 0; i < 30; i++) {
-////             System.out.println(array[i]);
-////         }
-//
-//         // ОБЯЗАТЕЛЬНО присваиваем результат переменной array!
-////         array = mergeSort.sortMerge(array);
-//
-//
-//        System.out.println(tringle(4));
-//
-//        System.out.println(factorial(3));
-//        System.out.println();
-//        rake(5);
-//
-//        System.out.println(sum(6));
-//
-//
-//        Knife knife = new Knife("knife 1");
-//        Medkit medkit = new Medkit("med kit 1");
-//
-//        knife.use();
-//        medkit.use();
-//        Integer a = 127;
-//        Integer b = 127;
-//        System.out.println(a == b); // Что выведет?
-//
-//        Integer c = 128;
-//        Integer d = 128;
-//        System.out.println(c == d); // А что выведет здесь?
-//
-//
-//
-//
-//
-//    public static int tringle(int n) {
-//        if (n == 1) return n;
-//
-//        return n + tringle(n - 1);
-//    }
-//
-//    public static int factorial(int n) {
-//        if (n < 2) return 1;
-//
-//        return n * factorial(n - 1);
-//
-//    }
-//
-//    public static void rake(int n) {
-//        if (n == 0) {
-//            System.out.println("pusk");
-//            return;
-//        }
-//
-//        System.out.println(n);
-//        rake(n - 1);
-//    }
-//
-//    public static int sum(int n) {
-//        if (n == 1){
-//            return n;
-//        }
-//
-//       return n += sum(n - 1);
-//
-
-
-//        List<Dragon> dragonList = List.of(new Dragon("dragon 1", 34), new Dragon("dragon 2", 56), new Dragon("dragon 65", 34), new Dragon("dragon 67", 34),
-//                new Dragon("dragon 23", 34), new Dragon("dragon 34", 34));
-//
-//        makeFlyAll(dragonList);
-//
-//        List<Number> numberList = new ArrayList<>(List.of(new Double(16.5), new Float(14.5F), new Integer(3)));
-//
-//        printAllElements(numberList);
-//
-//        fillWithIntegers(new ArrayList<Number>(5));
-//
-//
-//        List<Integer> integerList = List.of(12, 432, 45465, 3322, 32);
-//        copy(integerList, numberList);
-//
-//        System.out.println(findMax(integerList));
-
         List<String> strings = createEmptyList();
-
         strings.add("ddd");
         System.out.println(strings.toString());
 
@@ -294,6 +179,21 @@ public class Main {
         Item item = new Item(12);
         Knife knife = new Knife(12);
         item = (Item) knife;
+
+        BinaryTree<Integer,Integer> binaryTree1 = new BinaryTree<>(null);
+        BinaryTree<Integer,Integer> emptyBinaryTree = new BinaryTree<>(null);
+
+       List<Integer> list4 = List.of(50, 30, 70, 20, 40);  //, 60, 80, 35
+
+       for (Integer integer : list4){
+           binaryTree1.insert(integer,integer);
+       }
+
+        System.out.println(binaryTree1.inOrder().equals(binaryTree1.inOrderIterative()));
+        System.out.println(emptyBinaryTree.inOrder().equals(emptyBinaryTree.inOrderIterative()));
+
+        System.out.println(binaryTree1.inOrderIterative());
+
     }
 
 

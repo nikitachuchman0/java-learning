@@ -1,9 +1,6 @@
 package datastructures;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class BinaryTree<K extends Comparable<K>, V> {
 
@@ -121,27 +118,25 @@ public class BinaryTree<K extends Comparable<K>, V> {
                 parent.rightChild = null;
             }
 
-        }
-        else if (current.leftChild == null){
-            if (current == this.root){
+        } else if (current.leftChild == null) {
+            if (current == this.root) {
                 root = current.rightChild;
             }
 
-            if (isLeftChild){
+            if (isLeftChild) {
                 parent.leftChild = current.rightChild;
-            }
-            else {
+            } else {
                 parent.rightChild = current.rightChild;
             }
 
         } else if (current.rightChild == null) {
-            if (current == this.root){
+            if (current == this.root) {
                 root = current.leftChild;
             }
 
-            if (isLeftChild){
+            if (isLeftChild) {
                 parent.leftChild = current.leftChild;
-            }else {
+            } else {
                 parent.rightChild = current.leftChild;
             }
         }
@@ -203,6 +198,27 @@ public class BinaryTree<K extends Comparable<K>, V> {
 
         list.add(node.key);
 
+    }
+
+
+    public List<K> inOrderIterative(){
+        Deque<Node<K,V>> stack = new ArrayDeque<>();
+        List<K> result = new ArrayList<>(this.size);
+        Node<K,V> current = this.root;
+
+        while (!stack.isEmpty() || current != null){
+            if (current != null){
+                stack.push(current);
+                current = current.leftChild;
+            }
+            else {
+                current = stack.pop();
+                result.add(current.key);
+                current = current.rightChild;
+            }
+        }
+
+        return result;
     }
 
 
