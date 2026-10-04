@@ -193,6 +193,7 @@ public class Main {
         System.out.println(emptyBinaryTree.inOrder().equals(emptyBinaryTree.inOrderIterative()));
 
         System.out.println(binaryTree1.inOrderIterative());
+        System.out.println(binaryTree1.preOrderIterative());
 
     }
 

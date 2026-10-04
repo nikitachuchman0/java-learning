@@ -222,6 +222,27 @@ public class BinaryTree<K extends Comparable<K>, V> {
     }
 
 
+    public List<K> preOrderIterative(){
+        Deque<Node<K,V>> stack = new ArrayDeque<>();
+        List<K> result = new ArrayList<>(this.size);
+        Node<K,V> current = this.root;
+
+        while (!stack.isEmpty() || current != null){
+            if (current != null){
+                stack.push(current);
+                result.add(current.key);
+                current = current.leftChild;
+            }
+            else {
+               current =  stack.pop();
+                current = current.rightChild;
+            }
+        }
+
+        return result;
+    }
+
+
     public V max() {
         if (this.root == null) return null;
 
