@@ -40,7 +40,7 @@ public class BinaryTree<K extends Comparable<K>, V> {
     }
 
 
-    public boolean contains (K key){
+    public boolean contains(K key) {
         if (key == null) throw new NullPointerException("Root is Null!");
 
 
@@ -132,6 +132,7 @@ public class BinaryTree<K extends Comparable<K>, V> {
 
             if (this.root == current) {
                 this.root = null;
+                size--;
                 return true;
             }
 
@@ -140,32 +141,57 @@ public class BinaryTree<K extends Comparable<K>, V> {
             } else {
                 parent.rightChild = null;
             }
-
+            size--;
             return true;
         } else if (current.rightChild != null && current.leftChild != null) {
-            Node<K, V> successorParent = current;
+            Node<K, V> parentSuccessor = current;
             Node<K, V> successor = current.rightChild;
-//            Node<K,V> deleteNode = current;
-//            current = current.rightChild;
+//
 
-
-                while (current.leftChild != null) {
-                    successorParent = successor;
+            if (successor.leftChild != null) {
+                while (successor.leftChild != null) {
+                    parentSuccessor = successor;
                     successor = successor.leftChild;
                 }
 
-                if (successor.equals(current.rightChild)){
-                    
+                if (this.root == current) {
+                    this.root = successor;
+                } else if (isLeftChild) {
+                    parent.leftChild = successor;
+                } else {
+                    parent.rightChild = successor;
                 }
+
+                parentSuccessor.leftChild = successor.rightChild;
+                successor.leftChild = current.leftChild;
+                successor.rightChild = current.rightChild;
+                size--;
+                return true;
+            } else {
+                if (this.root == current) {
+                    this.root = successor;
+                } else if (isLeftChild) {
+                    parent.leftChild = successor;
+                } else {
+                    parent.rightChild = successor;
+                }
+
+                successor.leftChild = current.leftChild;
+
+                size--;
+                return true;
+            }
 
 
         } else {
 
             if (compareElements(current.key, this.root.key) == 0 && current.leftChild != null) {
                 this.root = root.leftChild;
+                size--;
                 return true;
             } else if (compareElements(current.key, this.root.key) == 0 && current.rightChild != null) {
                 this.root = root.rightChild;
+                size--;
                 return true;
             }
 
@@ -174,13 +200,9 @@ public class BinaryTree<K extends Comparable<K>, V> {
             else if (!isLeftChild && current.leftChild != null) parent.rightChild = current.leftChild;
             else parent.rightChild = current.rightChild;
 
-
+            size--;
             return true;
         }
-
-
-        return true;
-
 
     }
 
