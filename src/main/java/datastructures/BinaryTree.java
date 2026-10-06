@@ -19,7 +19,7 @@ public class BinaryTree<K extends Comparable<K>, V> {
 
     public V find(K key) {
         if (key == null) throw new NullPointerException("Root is Null!");
-        ;
+
 
         if (root == null) return null;
 
@@ -37,6 +37,29 @@ public class BinaryTree<K extends Comparable<K>, V> {
             }
         }
         return null;
+    }
+
+
+    public boolean contains (K key){
+        if (key == null) throw new NullPointerException("Root is Null!");
+
+
+        if (root == null) return false;
+
+        Node<K, V> current = root;
+
+        while (current != null) {
+            int cmp = compareElements(key, current.key);
+
+            if (cmp == 0) {
+                return true;
+            } else if (cmp > 0) {
+                current = current.rightChild;
+            } else {
+                current = current.leftChild;
+            }
+        }
+        return false;
     }
 
     public boolean insert(K key, V value) {
@@ -82,34 +105,34 @@ public class BinaryTree<K extends Comparable<K>, V> {
     }
 
     public boolean delete(K key) {
-        Objects.requireNonNull(key, "key is null!");
-
+        Objects.requireNonNull(key, "Key is null!");
+        if (this.root == null) return false;
+        Node<K, V> parent = this.root;
         Node<K, V> current = this.root;
-        Node<K, V> parent = null;
-        boolean isLeftChild = true;
+        boolean isLeftChild = false;
 
-        while (compareElements(key, current.key) == 0) {
+
+        while (compareElements(current.key, key) != 0) {
+
             parent = current;
 
             if (compareElements(key, current.key) < 0) {
-
-                isLeftChild = true;
                 current = current.leftChild;
-
+                isLeftChild = true;
             } else {
-
-                isLeftChild = false;
                 current = current.rightChild;
-
+                isLeftChild = false;
             }
 
             if (current == null) return false;
         }
 
+
         if (current.leftChild == null && current.rightChild == null) {
 
-            if (current == this.root) {
+            if (this.root == current) {
                 this.root = null;
+                return true;
             }
 
             if (isLeftChild) {
@@ -118,32 +141,47 @@ public class BinaryTree<K extends Comparable<K>, V> {
                 parent.rightChild = null;
             }
 
-        } else if (current.leftChild == null) {
-            if (current == this.root) {
-                root = current.rightChild;
+            return true;
+        } else if (current.rightChild != null && current.leftChild != null) {
+            Node<K, V> successorParent = current;
+            Node<K, V> successor = current.rightChild;
+//            Node<K,V> deleteNode = current;
+//            current = current.rightChild;
+
+
+                while (current.leftChild != null) {
+                    successorParent = successor;
+                    successor = successor.leftChild;
+                }
+
+                if (successor.equals(current.rightChild)){
+                    
+                }
+
+
+        } else {
+
+            if (compareElements(current.key, this.root.key) == 0 && current.leftChild != null) {
+                this.root = root.leftChild;
+                return true;
+            } else if (compareElements(current.key, this.root.key) == 0 && current.rightChild != null) {
+                this.root = root.rightChild;
+                return true;
             }
 
-            if (isLeftChild) {
-                parent.leftChild = current.rightChild;
-            } else {
-                parent.rightChild = current.rightChild;
-            }
+            if (isLeftChild && current.leftChild != null) parent.leftChild = current.leftChild;
+            else if (isLeftChild && current.rightChild != null) parent.leftChild = current.rightChild;
+            else if (!isLeftChild && current.leftChild != null) parent.rightChild = current.leftChild;
+            else parent.rightChild = current.rightChild;
 
-        } else if (current.rightChild == null) {
-            if (current == this.root) {
-                root = current.leftChild;
-            }
 
-            if (isLeftChild) {
-                parent.leftChild = current.leftChild;
-            } else {
-                parent.rightChild = current.leftChild;
-            }
+            return true;
         }
 
-//   доделать
 
         return true;
+
+
     }
 
     private int compareElements(K firstValue, K secondValue) {
@@ -201,17 +239,16 @@ public class BinaryTree<K extends Comparable<K>, V> {
     }
 
 
-    public List<K> inOrderIterative(){
-        Deque<Node<K,V>> stack = new ArrayDeque<>();
+    public List<K> inOrderIterative() {
+        Deque<Node<K, V>> stack = new ArrayDeque<>();
         List<K> result = new ArrayList<>(this.size);
-        Node<K,V> current = this.root;
+        Node<K, V> current = this.root;
 
-        while (!stack.isEmpty() || current != null){
-            if (current != null){
+        while (!stack.isEmpty() || current != null) {
+            if (current != null) {
                 stack.push(current);
                 current = current.leftChild;
-            }
-            else {
+            } else {
                 current = stack.pop();
                 result.add(current.key);
                 current = current.rightChild;
@@ -222,19 +259,18 @@ public class BinaryTree<K extends Comparable<K>, V> {
     }
 
 
-    public List<K> preOrderIterative(){
-        Deque<Node<K,V>> stack = new ArrayDeque<>();
+    public List<K> preOrderIterative() {
+        Deque<Node<K, V>> stack = new ArrayDeque<>();
         List<K> result = new ArrayList<>(this.size);
-        Node<K,V> current = this.root;
+        Node<K, V> current = this.root;
 
-        while (!stack.isEmpty() || current != null){
-            if (current != null){
+        while (!stack.isEmpty() || current != null) {
+            if (current != null) {
                 stack.push(current);
                 result.add(current.key);
                 current = current.leftChild;
-            }
-            else {
-               current =  stack.pop();
+            } else {
+                current = stack.pop();
                 current = current.rightChild;
             }
         }
@@ -308,6 +344,18 @@ public class BinaryTree<K extends Comparable<K>, V> {
 
         public V getValue() {
             return value;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+            Node<?, ?> node = (Node<?, ?>) o;
+            return Objects.equals(key, node.key) && Objects.equals(value, node.value) && Objects.equals(leftChild, node.leftChild) && Objects.equals(rightChild, node.rightChild);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(key, value, leftChild, rightChild);
         }
     }
 }
