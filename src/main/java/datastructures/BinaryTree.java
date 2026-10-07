@@ -335,6 +335,10 @@ public class BinaryTree<K extends Comparable<K>, V> {
     }
 
 
+    public int getSize() {
+        return size;
+    }
+
     private class Node<K, V> {
         private final K key;
         private final V value;
