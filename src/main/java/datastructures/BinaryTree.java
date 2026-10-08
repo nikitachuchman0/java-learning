@@ -41,7 +41,7 @@ public class BinaryTree<K extends Comparable<K>, V> {
 
 
     public boolean contains(K key) {
-        if (key == null) throw new NullPointerException("Root is Null!");
+        if (key == null) throw new NullPointerException("Key is Null!");
 
 
         if (root == null) return false;
